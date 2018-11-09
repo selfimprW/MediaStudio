@@ -1,9 +1,5 @@
 package com.media.studio.gif.decoder;
 
-//import static com.bumptech.glide.gifdecoder.GifDecoder.STATUS_FORMAT_ERROR;
-//import static com.bumptech.glide.gifdecoder.GifFrame.DISPOSAL_NONE;
-//import static com.bumptech.glide.gifdecoder.GifFrame.DISPOSAL_UNSPECIFIED;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,12 +9,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifDecoder.STATUS_FORMAT_ERROR;
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifFrame.DISPOSAL_NONE;
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifFrame.DISPOSAL_UNSPECIFIED;
+import static com.media.studio.gif.decoder.GifDecoder.STATUS_FORMAT_ERROR;
+import static com.media.studio.gif.decoder.GifFrame.DISPOSAL_NONE;
+import static com.media.studio.gif.decoder.GifFrame.DISPOSAL_UNSPECIFIED;
 
 /**
- * A class responsible for creating {@link com.zhuanzhuan.shortvideo.gif.decoder.GifHeader}s from data
+ * A class responsible for creating {@link GifHeader}s from data
  * representing animated GIFs.
  *
  * @see <a href="https://www.w3.org/Graphics/GIF/spec-gif89a.txt">GIF 89a Specification</a>

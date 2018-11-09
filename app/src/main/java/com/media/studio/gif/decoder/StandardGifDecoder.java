@@ -42,10 +42,10 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifFrame.DISPOSAL_BACKGROUND;
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifFrame.DISPOSAL_NONE;
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifFrame.DISPOSAL_PREVIOUS;
-import static com.zhuanzhuan.shortvideo.gif.decoder.GifFrame.DISPOSAL_UNSPECIFIED;
+import static com.media.studio.gif.decoder.GifFrame.DISPOSAL_BACKGROUND;
+import static com.media.studio.gif.decoder.GifFrame.DISPOSAL_NONE;
+import static com.media.studio.gif.decoder.GifFrame.DISPOSAL_PREVIOUS;
+import static com.media.studio.gif.decoder.GifFrame.DISPOSAL_UNSPECIFIED;
 
 /**
  * Reads frame data from a GIF image source and decodes it into individual frames for animation
