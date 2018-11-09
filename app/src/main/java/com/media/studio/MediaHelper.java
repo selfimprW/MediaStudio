@@ -1,5 +1,6 @@
 package com.media.studio;
 
+import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.text.TextUtils;
 
@@ -32,16 +33,16 @@ public class MediaHelper {
 
     @Override
     public String toString() {
-        return "width:" + getWH()[0]
-                + "\nheight:" + getWH()[1]
-                + "\nduration:" + getDuration()
-                + "\nmimeType:" + getMimeType()
-                + "\nartist:" + getArtist()
-                + "\ntitle:" + getTitle()
-                + "\ndata:" + getData()
-                + "\nlocation:" + getLocation()
-                + "\nbitrate:" + getBitrate()
-                + "\nclosestSync:" + getClosestSync();
+        return "width : " + getWH()[0]
+                + "\nheight : " + getWH()[1]
+                + "\nduration : " + getDuration()
+                + "\nmimeType : " + getMimeType()
+                + "\nlocation : " + getLocation()
+                + "\nbitrate : " + getBitrate() + " bit/s"
+                + "\ndata : " + getData()
+                + "\nartist : " + getArtist()
+                + "\ntitle : " + getTitle()
+                + "\nalbumartist : " + getAlbumartist();
     }
 
     /**
@@ -90,20 +91,24 @@ public class MediaHelper {
         long violationDate;
         try {
             SimpleDateFormat metaDateFormat = new SimpleDateFormat(VIDEO_META_DATE_MASK, Locale.CHINA);
-            violationDate= metaDateFormat.parse(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE)).getTime();
+            violationDate = metaDateFormat.parse(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE)).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
-            violationDate= 0;
+            violationDate = 0;
         }
 
-        SimpleDateFormat editTextDateFormat = new SimpleDateFormat(EDIT_TEXT_MASK,Locale.CHINA);
-        return  editTextDateFormat.format(violationDate);
+        SimpleDateFormat editTextDateFormat = new SimpleDateFormat(EDIT_TEXT_MASK, Locale.CHINA);
+        return editTextDateFormat.format(violationDate);
     }
 
     public static final String EDIT_TEXT_MASK = "yyyy.MM.dd";
 
     public String getAlbumartist() {
         return retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
+    }
+
+    public Bitmap getFrameAtTime(){
+        return retriever.getFrameAtTime();
     }
 
     public String getCaptureFramerate() {

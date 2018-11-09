@@ -3,15 +3,20 @@ package com.media.studio;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * description：   <br/>
@@ -34,9 +39,12 @@ public class VideoFragment extends Fragment {
 
     private void initView(View root) {
         TextView mVideoInfoTv = root.findViewById(R.id.video_info);
+        ImageView mCoverIv = root.findViewById(R.id.cover);
+
         MediaHelper helper = new MediaHelper();
         helper.setDataSource(readAssetsToCache());
         mVideoInfoTv.setText(helper.toString());
+        mCoverIv.setImageBitmap(helper.getFrameAtTime());
         helper.release();
     }
 
@@ -77,5 +85,4 @@ public class VideoFragment extends Fragment {
         }
         return outPath;
     }
-
 }
