@@ -41,7 +41,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/frame_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="4dp"
+            android:scrollbarThumbHorizontal="@drawable/bg_scroll_bar"
+            android:scrollbars="horizontal" />
 
     </LinearLayout>
 </ScrollView>

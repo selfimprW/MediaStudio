@@ -70,6 +70,8 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
     }
 
     private void extractThumb() {
+        mExtractThumbBtn.setText("视频缩略图提取中...");
+        mExtractThumbBtn.setEnabled(false);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -93,20 +95,20 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
                     bitmaps.add(temp);
                 }
                 helper.release();
-
+                Log.w("wjc", bitmaps.size() + "," + (System.currentTimeMillis() - start));
                 if (getActivity() == null) {
                     return;
                 }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (mFrameAdapter == null) {
+                        if (mFrameAdapter == null || mExtractThumbBtn == null) {
                             return;
                         }
                         mFrameAdapter.setBitmaps(bitmaps);
+                        mExtractThumbBtn.setEnabled(true);
                     }
                 });
-                Log.w("wjc", bitmaps.size() + "," + (System.currentTimeMillis() - start));
             }
         }).start();
     }
