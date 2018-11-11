@@ -107,6 +107,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
                         }
                         mFrameAdapter.setBitmaps(bitmaps);
                         mExtractThumbBtn.setEnabled(true);
+                        mExtractThumbBtn.setText("提取缩略图");
                     }
                 });
             }
