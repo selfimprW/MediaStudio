@@ -16,9 +16,16 @@ import android.support.multidex.MultiDex;
  */
 public class MSApp extends Application {
 
+    private static Context context;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+        context = this;
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

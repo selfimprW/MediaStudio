@@ -1,4 +1,4 @@
-package com.media.studio;
+package com.media.studio.utils;
 
 import android.text.TextUtils;
 

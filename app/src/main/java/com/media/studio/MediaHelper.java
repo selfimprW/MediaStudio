@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.text.TextUtils;
 
+import com.media.studio.utils.ParseUtil;
+import com.media.studio.utils.TimeUtil;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
