@@ -1,13 +1,18 @@
 package com.media.studio;
 
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +20,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * description：   <br/>
@@ -28,7 +33,11 @@ import java.util.regex.Pattern;
  * Modifier：  <br/>
  * Modify time：  <br/>
  */
-public class VideoFragment extends Fragment {
+public class VideoFragment extends Fragment implements View.OnClickListener {
+
+    private Button mExtractThumbBtn;
+    private RecyclerView mFrameListRv;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,15 +46,74 @@ public class VideoFragment extends Fragment {
         return root;
     }
 
+    private MediaHelper helper;
+    private String mVideoPath;
+    private ThumbListAdapter mFrameAdapter;
+
     private void initView(View root) {
         TextView mVideoInfoTv = root.findViewById(R.id.video_info);
         ImageView mCoverIv = root.findViewById(R.id.cover);
+        mExtractThumbBtn = root.findViewById(R.id.extract_thumb);
+        mExtractThumbBtn.setOnClickListener(this);
+        mFrameListRv = root.findViewById(R.id.frame_list);
+        mFrameListRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mFrameAdapter = new ThumbListAdapter();
+        mFrameListRv.setAdapter(mFrameAdapter);
 
-        MediaHelper helper = new MediaHelper();
-        helper.setDataSource(readAssetsToCache());
+        mVideoPath = readAssetsToCache();
+
+        helper = new MediaHelper();
+        helper.setDataSource(mVideoPath);
         mVideoInfoTv.setText(helper.toString());
         mCoverIv.setImageBitmap(helper.getFrameAtTime());
         helper.release();
+    }
+
+    private void extractThumb() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                helper = new MediaHelper();
+                helper.setDataSource(mVideoPath);
+                long start = System.currentTimeMillis();
+                long duration = helper.getDuration();
+                long range = 500;
+                long number = duration / range;
+                if (number >= 20) {
+                    number = 20;
+                    range = duration / 20;
+                }
+                final List<Bitmap> bitmaps = new ArrayList<>();
+                Bitmap temp;
+                for (long i = 0; i < number; i++) {
+                    temp = helper.getFrameAtTime(i * range * 1000, MediaMetadataRetriever.OPTION_CLOSEST);
+                    if (temp == null) {
+                        continue;
+                    }
+                    bitmaps.add(temp);
+                }
+                helper.release();
+
+                if (getActivity() == null) {
+                    return;
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mFrameAdapter == null) {
+                            return;
+                        }
+                        mFrameAdapter.setBitmaps(bitmaps);
+                    }
+                });
+                Log.w("wjc", bitmaps.size() + "," + (System.currentTimeMillis() - start));
+            }
+        }).start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     public String readAssetsToCache() {
@@ -84,5 +152,12 @@ public class VideoFragment extends Fragment {
             }
         }
         return outPath;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.extract_thumb) {
+            extractThumb();
+        }
     }
 }

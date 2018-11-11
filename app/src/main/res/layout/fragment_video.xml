@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="10dp">
+    android:fadingEdgeLength="5dp"
+    android:requiresFadingEdge="vertical"
+    android:scrollbars="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:requiresFadingEdge="vertical"
-        android:fadingEdgeLength="5dp"
-        android:scrollbars="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/video_info"
@@ -21,14 +22,26 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="2dp"
             android:textColor="#2E3135"
-            android:textSize="15dp" />
-    </ScrollView>
+            android:textSize="15dp"
+            tools:ignore="SpUsage" />
 
-    <ImageView
-        android:id="@+id/cover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:layout_width="100dp" />
 
+        <Button
+            android:id="@+id/extract_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提取缩略图" />
 
-</LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/frame_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>

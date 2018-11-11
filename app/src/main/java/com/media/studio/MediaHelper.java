@@ -6,7 +6,6 @@ import android.text.TextUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Locale;
 
 /**
@@ -35,7 +34,7 @@ public class MediaHelper {
     public String toString() {
         return "width : " + getWH()[0]
                 + "\nheight : " + getWH()[1]
-                + "\nduration : " + getDuration()
+                + "\nduration : " + TimeUtil.durationFormat(getDuration()/1000)
                 + "\nmimeType : " + getMimeType()
                 + "\nlocation : " + getLocation()
                 + "\nbitrate : " + getBitrate() + " bit/s"
@@ -107,8 +106,12 @@ public class MediaHelper {
         return retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
     }
 
-    public Bitmap getFrameAtTime(){
+    public Bitmap getFrameAtTime() {
         return retriever.getFrameAtTime();
+    }
+
+    public Bitmap getFrameAtTime(long timeUs, int option) {
+        return retriever.getFrameAtTime(timeUs, option);
     }
 
     public String getCaptureFramerate() {
