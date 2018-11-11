@@ -1,6 +1,7 @@
 package com.media.studio;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.media.studio.gif.GifUtil;
 
 import java.io.File;
@@ -44,6 +51,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
     private Button mMakeGifIv;
     private RecyclerView mFrameListRv;
     private ScrollView mContentView;
+    private ImageView mGifResultIv;
 
     @Nullable
     @Override
@@ -65,6 +73,9 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
         mExtractThumbBtn.setOnClickListener(this);
         mMakeGifIv = root.findViewById(R.id.make_gif);
         mMakeGifIv.setOnClickListener(this);
+        mGifResultIv = root.findViewById(R.id.gif_result);
+
+
         mFrameListRv = root.findViewById(R.id.frame_list);
         mFrameListRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mFrameAdapter = new ThumbListAdapter();
@@ -192,6 +203,24 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
             }
             String gifPath = generateGifFilePath(System.currentTimeMillis() + "");
             gifPath = GifUtil.createGifByBitmaps(gifPath, mFrameAdapter.getBitmaps(), 150);
+
+//            Glide.with(getActivity()).load(gifPath).asGif().into(mGifResultIv);
+
+            Glide.with(this).load(gifPath).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                    if (resource instanceof GifDrawable) {
+                    //加载一次
+//                        ((GifDrawable)resource).setLoopCount(1);
+//                    }
+                    return false;
+                }
+
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                    return false;
+                }
+            }).into(mGifResultIv);
         } catch (Exception e) {
             e.printStackTrace();
         }
