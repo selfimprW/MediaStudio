@@ -28,6 +28,10 @@ public class ThumbListAdapter extends RecyclerView.Adapter<ThumbListAdapter.Thum
         notifyDataSetChanged();
     }
 
+    public List<Bitmap> getBitmaps() {
+        return bitmaps;
+    }
+
     @Override
     public ThumbListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_thumb, parent, false);

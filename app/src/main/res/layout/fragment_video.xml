@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fadingEdgeLength="5dp"
@@ -46,6 +47,12 @@
             android:scrollbarSize="4dp"
             android:scrollbarThumbHorizontal="@drawable/bg_scroll_bar"
             android:scrollbars="horizontal" />
+
+        <Button
+            android:id="@+id/make_gif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="合成GIF" />
 
     </LinearLayout>
 </ScrollView>
