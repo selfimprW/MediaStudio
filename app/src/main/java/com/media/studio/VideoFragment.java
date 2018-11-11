@@ -65,7 +65,12 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
         helper = new MediaHelper();
         helper.setDataSource(mVideoPath);
         mVideoInfoTv.setText(helper.toString());
-        mCoverIv.setImageBitmap(helper.getFrameAtTime());
+        Bitmap bitmap = helper.getFrameAtTime();
+        if (bitmap != null && mCoverIv.getLayoutParams() != null) {
+            mCoverIv.setImageBitmap(bitmap);
+            mCoverIv.getLayoutParams().height = bitmap.getHeight() / 2;
+            mCoverIv.getLayoutParams().width = bitmap.getWidth() / 2;
+        }
         helper.release();
     }
 
